@@ -8,7 +8,7 @@ module.exports = async (client: Dictature, message: Message) => {
 
   if (message.author.bot) return;
 
-  var botPrefix = "!";
+  var botPrefix = "epi";
 
 
   if (message.content.toLowerCase().startsWith(botPrefix)) {
@@ -25,7 +25,7 @@ module.exports = async (client: Dictature, message: Message) => {
 
       cmd.run(client, message, args);
 
-      logger("Command", `[${chalk.yellow(message.author.tag)}] used ${chalk.green(command)} ${chalk.cyan(args.join(" "))}`)
+      logger("[Events.Message]", `[${chalk.yellow(message.author.tag)}] used ${chalk.green(command)} ${chalk.cyan(args.join(" "))}`)
     }
   }
 };

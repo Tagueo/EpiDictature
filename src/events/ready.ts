@@ -6,10 +6,10 @@ import goulag from "../controllers/goulag";
 
 
 module.exports = async (client: Dictature) => {
-	logger("Event", "Bip boup", "success")
+	logger("[Events.Ready]", "Bip boup", "success")
 
-	client.user?.setActivity('👀👀', {
-		type: 'WATCHING'
+	client.user?.setActivity(`${goulag.getCount()} goulaged so far 👀`, {
+		type: "WATCHING"
 	})
 
 	if (!client.user?.bot) {
@@ -20,7 +20,7 @@ module.exports = async (client: Dictature) => {
 		DeGoulag users
 	*/
 	goulag.checkForExpiredIsolation(client)
-	setTimeout(() => {
+	setInterval(() => {
 		goulag.checkForExpiredIsolation(client)
 	}, 120_000);
 }

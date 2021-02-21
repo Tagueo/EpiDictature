@@ -7,7 +7,7 @@ module.exports.run = async (client: Dictature, message: Message, args: Array<str
     if (args[0] === "list") {
         return goulag.list(message, args)
     }
-    
+
     if (!message.member.permissions.has("MANAGE_ROLES")) {
         return error(message.channel,
             "No.",
@@ -40,10 +40,14 @@ module.exports.run = async (client: Dictature, message: Message, args: Array<str
             `The provided user is a bot.`)
     }
 
-    if (toIsolate.roles.cache.has(isolationRole.id)) {
+    if (await goulag.isUserIsolated(toIsolate.id, toIsolate.guild.id)) {
         goulag.deisolate(message, args, toIsolate)
     } else {
         goulag.isolate(message, args, toIsolate)
+
+        client.user?.setActivity(`${goulag.getCount()} goulaged so far 👀`, {
+            type: "WATCHING"
+        })
     }
 }
 
