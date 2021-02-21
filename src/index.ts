@@ -1,15 +1,11 @@
 import Discord from "discord.js";
 import fs from "fs";
-import chalk from "chalk";
-import moment from "moment";
 import Enmap from "enmap";
 import low from 'lowdb';
 import FileSync from 'lowdb/adapters/FileSync';
 import * as config from './config.json';
-
-export type isolSchema = {
-	users: { guildId: string, userId: string, roles: string[], duration: number}[]
-}
+import { isolSchema } from "./types/isolSchema";
+import { logger } from "./modules/logger";
 
 export class Dictature extends Discord.Client {
 	public commands = new Enmap();
@@ -24,7 +20,7 @@ isolations.defaults({ users: [] })
 	.write()
 
 fs.readdir("./events/", (err, files) => {
-	console.log(`[${chalk.cyan(moment(Date.now()).format("h:mm:ss"))}] ${chalk.cyan("Loading events ...")}`)
+	logger("", "Loading events ...")
 	if (err) return console.error(err);
 	files.forEach((file) => {
 		if (!file.endsWith(".js")) return;
@@ -39,7 +35,7 @@ fs.readdir("./events/", (err, files) => {
 dictature.commands = new Enmap();
 
 fs.readdir("./commands/", (err, files) => {
-	console.log(`[${chalk.cyan(moment(Date.now()).format("h:mm:ss"))}] ${chalk.cyan("Loading commands ...")}`)
+	logger("", "Loading commands ...")
 	if (err) {
 		return console.error(err);
 	}

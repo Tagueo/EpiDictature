@@ -13,7 +13,7 @@ export function error(message: Message, errorTitle: string, errorMessage: string
 
 export function success(message: Message, successTitle: string, successMessage: string) {
     const embed = {
-        "title": `✔ Success: ${successTitle}`,
+        "title": `✅ Success: ${successTitle}`,
         "description": successMessage,
         "color": 8256905,
         "timestamp": Date.now()

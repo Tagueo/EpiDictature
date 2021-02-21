@@ -1,11 +1,7 @@
 import { GuildMember, Message } from "discord.js";
-import { Dictature, isolSchema } from "..";
+import { Dictature } from "..";
 import { error, success } from "../modules/defaultEmbeds";
-import low from 'lowdb';
-import FileSync from 'lowdb/adapters/FileSync';
-
-const adapter = new FileSync<isolSchema>('isolations.json')
-const isolations = low(adapter)
+import goulag from "../controllers/goulag";
 
 module.exports.run = async (client: Dictature, message: Message, args: Array<string>) => {
     if (!message.member.permissions.has("MANAGE_ROLES")) {
@@ -17,7 +13,11 @@ module.exports.run = async (client: Dictature, message: Message, args: Array<str
     if (!args[0]) {
         return error(message,
             "Missing argument",
-            "Missing argument in position 0.\nUsage: ``!isole <user> (time in hours)``")
+            "Missing argument in position 0.\nUsage: ``!goulag list|<user> (time in hours)``")
+    }
+
+    if (args[0] === "list") {
+        return goulag.list(message, args)
     }
 
     const toIsolate: GuildMember = message.mentions.members.first() || await message.guild.members.fetch(args[0]);
@@ -41,63 +41,15 @@ module.exports.run = async (client: Dictature, message: Message, args: Array<str
     }
 
     if (toIsolate.roles.cache.has(isolationRole.id)) {
-        deisolate()
+        goulag.deisolate(message, args, toIsolate)
     } else {
-        isolate()
+        goulag.isolate(message, args, toIsolate)
 
         if (args[1]) {
-            setTimeout(deisolate, parseFloat(args[1]) * 3600000)
+            setTimeout(() => {
+                goulag.deisolate(message, args, toIsolate)
+            }, parseFloat(args[1]) * 3600000)
         }
-    }
-
-    function isolate() {
-        let roleIds: string[] = [];
-
-        toIsolate.roles.cache.forEach((role, key) => {
-            if (role.id != toIsolate.guild.roles.everyone.id) {
-                roleIds.push(role.id);
-                toIsolate.roles.remove(role.id);
-            }
-        });
-
-        isolations.get('users')
-            .push({ guildId: message.guild.id,
-                userId: toIsolate.user.id,
-                roles: roleIds,
-                duration: args[1] ? parseFloat(args[1]) * 3600000 : 0 })
-            .write()
-
-        toIsolate.roles.add(isolationRole)
-
-        return success(message, "Isolation performed!", `Successfully isolated ${toIsolate.displayName}${args[1] ? ` for ${args[1]} hours` : ""}.`)
-    }
-
-    function deisolate() {
-
-        toIsolate.roles.remove(isolationRole)
-
-        let entry = isolations.get('users')
-            .find(val => val.guildId === message.guild.id && val.userId === toIsolate.id)
-            .value();
-
-        if (!entry.userId) {
-            return error(message,
-                "Invalid User",
-                `The provided user was not in isolation.`)
-        }
-        
-        for (let i = 0; i < entry.roles.length; i++) {
-            const roleId = entry.roles[i];
-
-            toIsolate.roles.add(roleId)
-        }
-
-        isolations.get('users').remove(entry)
-            .write();
-
-        return success(message,
-            "DeIsolated " + toIsolate.displayName,
-            `${toIsolate.displayName} has been successfully deIsolated${entry.duration > 0 ? ` after ${entry.duration / 3600000} hours` : ""}.`)
     }
 }
 

@@ -1,5 +1,6 @@
 import { GuildMember } from "discord.js";
-import { Dictature, isolSchema } from "..";
+import { Dictature } from "..";
+import { isolSchema } from "../types/isolSchema";
 import low from 'lowdb';
 import FileSync from 'lowdb/adapters/FileSync';
 

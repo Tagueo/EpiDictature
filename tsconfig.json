@@ -5,8 +5,9 @@
     "watch": true,
     "outDir": "bin/",
     "rootDir": "src/",
-    "target": "ES6",
+    "lib": ["es2020"],
     "module": "commonjs",
+    "target": "es2020",
     "esModuleInterop": true
   },
   "exclude": [
