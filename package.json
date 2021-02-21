@@ -1,0 +1,24 @@
+{
+  "name": "epidictature",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bin/index.js",
+  "scripts": {
+    "start": "cd bin && node index.js",
+    "tsc": "tsc -p tsconfig.json"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "discord.js": "^12.5.1",
+    "enmap": "^5.8.4",
+    "lowdb": "^1.0.0",
+    "moment": "^2.29.1",
+    "typescript": "^4.1.5"
+  },
+  "devDependencies": {
+    "@types/lowdb": "^1.0.9",
+    "@types/node": "^14.14.31"
+  }
+}

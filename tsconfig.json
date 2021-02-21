@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
+    "watch": true,
+    "outDir": "bin/",
+    "rootDir": "src/",
+    "target": "ES6",
+    "module": "commonjs",
+    "esModuleInterop": true
+  },
+  "exclude": [
+    "node_modules",
+  ]
+}
