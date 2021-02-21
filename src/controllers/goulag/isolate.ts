@@ -1,6 +1,7 @@
 import { GuildMember, Message } from "discord.js";
-import { success } from "../../modules/defaultEmbeds";
+import { error, success } from "../../modules/defaultEmbeds";
 import { isolations } from ".";
+import { logger } from "../../modules/logger";
 
 /**
  * Puts the user in the server's goulag
@@ -8,7 +9,7 @@ import { isolations } from ".";
  * @param  {string[]} args args from discord
  * @param  {GuildMember} toIsolate user to put in the goulag
  */
-export function isolate(message: Message, args: string[], toIsolate: GuildMember) {
+export async function isolate(message: Message, args: string[], toIsolate: GuildMember) {
     const isolationRole = toIsolate.guild.roles.cache.find(role => role.name === "isoled");
 
     let roleIds: string[] = [];
@@ -20,6 +21,8 @@ export function isolate(message: Message, args: string[], toIsolate: GuildMember
         }
     });
 
+    toIsolate.roles.add(isolationRole);
+
     isolations.get('users')
         .push({
             guildId: message.guild.id,
@@ -30,8 +33,10 @@ export function isolate(message: Message, args: string[], toIsolate: GuildMember
         })
         .write();
 
-    toIsolate.roles.add(isolationRole);
+    isolations.update('count', n => n + 1)
+    .write()
 
+    logger("[Controllers.Goulag]", `${toIsolate.displayName} is in the goulag on ${toIsolate.guild.name}`, 'success')
     return success(message.channel,
         "Isolation performed!",
         `Successfully isolated ${toIsolate.displayName}${args[1] ? ` for ${args[1]} hours` : ""}.`);

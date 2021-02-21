@@ -2,7 +2,6 @@ import { success } from "../../modules/defaultEmbeds";
 import { isolations } from ".";
 import { Dictature } from "../..";
 import { logger } from "../../modules/logger";
-import { TextChannel } from "discord.js";
 
 export async function checkForExpiredIsolation(client: Dictature) {
     const toDeIsolate = isolations.get('users')
@@ -28,7 +27,7 @@ export async function checkForExpiredIsolation(client: Dictature) {
             isolations.get('users').remove(entry)
                 .write();
     
-            logger("[Goulag]", `${member.displayName}'s goulag time on ${guild.name} is expired 😀`, 'success')
+            logger("[Controllers.Goulag]", `${member.displayName}'s goulag time on ${guild.name} is expired 😀`, 'success')
             const logChann = await guild.channels.cache.find(c => c.name === "logs" && c.type === 'text');
             
             if (logChann.isText()) {

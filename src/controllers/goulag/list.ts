@@ -1,4 +1,3 @@
-import { Color } from "chalk";
 import { GuildMember, Message, MessageEmbed } from "discord.js";
 import { isolations } from ".";
 
