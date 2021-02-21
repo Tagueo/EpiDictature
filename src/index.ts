@@ -5,6 +5,7 @@ import moment from "moment";
 import Enmap from "enmap";
 import low from 'lowdb';
 import FileSync from 'lowdb/adapters/FileSync';
+import * as config from './config.json';
 
 export type isolSchema = {
 	users: { guildId: string, userId: string, roles: string[], duration: number}[]
@@ -50,6 +51,6 @@ fs.readdir("./commands/", (err, files) => {
 	});
 });
 
-dictature.login("Nzk1Nzc4OTU5OTE5ODA4NTUy.X_OU6A.eLMcY_hzTo7oQiPpCAHX7_W74eM");
+dictature.login(config.token);
 
 dictature.on("error", console.error);
