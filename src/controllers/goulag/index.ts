@@ -9,5 +9,7 @@ import { isolate } from './isolate';
 import { deisolate } from './deisolate';
 import { list } from './list';
 import { checkForExpiredIsolation } from './checkForExpiredIsolation';
+import { getCount } from './getCount';
+import { isUserIsolated } from './isUserIsolated';
 
-export default { isolate, deisolate, list, checkForExpiredIsolation }
+export default { isolate, deisolate, list, checkForExpiredIsolation, getCount, isUserIsolated }
