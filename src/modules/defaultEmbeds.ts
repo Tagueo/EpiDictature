@@ -1,6 +1,6 @@
-import { Message } from "discord.js";
+import { DMChannel, Message, NewsChannel, TextChannel } from "discord.js";
 
-export function error(message: Message, errorTitle: string, errorMessage: string) {
+export function error(channel: TextChannel | DMChannel | NewsChannel, errorTitle: string, errorMessage: string) {
     const embed = {
         "title": `❌ Error: ${errorTitle}`,
         "description": errorMessage,
@@ -8,10 +8,10 @@ export function error(message: Message, errorTitle: string, errorMessage: string
         "timestamp": Date.now()
     };
 
-    message.channel.send({ embed })
+    channel.send({ embed })
 }
 
-export function success(message: Message, successTitle: string, successMessage: string) {
+export function success(channel: TextChannel | DMChannel | NewsChannel, successTitle: string, successMessage: string) {
     const embed = {
         "title": `✅ Success: ${successTitle}`,
         "description": successMessage,
@@ -19,5 +19,5 @@ export function success(message: Message, successTitle: string, successMessage: 
         "timestamp": Date.now()
     };
 
-    message.channel.send({ embed })
+    channel.send({ embed })
 }

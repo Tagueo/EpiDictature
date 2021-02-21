@@ -30,9 +30,8 @@ export async function list(message: Message, args: string[]) {
 
         embed.addField(
             user.displayName,
-            `Since: ${new Date(entry.date).toLocaleDateString('en-UK', options)} | Until: ${new Date(until).toLocaleDateString('en-UK', options)}`
-            + (entry.duration > 0 ? ` | Remaining: ${hours}h ${minutes}m` : ''),
-            true)
+            `Since: ${new Date(entry.date).toLocaleDateString('en-UK', options)}`
+            + (entry.duration > 0 ? ` | Until: ${new Date(until).toLocaleDateString('en-UK', options)} | Remaining: ${hours}h ${minutes}m` : ''))
     }
 
     message.channel.send(embed)

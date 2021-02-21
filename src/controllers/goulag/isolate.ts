@@ -32,7 +32,7 @@ export function isolate(message: Message, args: string[], toIsolate: GuildMember
 
     toIsolate.roles.add(isolationRole);
 
-    return success(message,
+    return success(message.channel,
         "Isolation performed!",
         `Successfully isolated ${toIsolate.displayName}${args[1] ? ` for ${args[1]} hours` : ""}.`);
 }

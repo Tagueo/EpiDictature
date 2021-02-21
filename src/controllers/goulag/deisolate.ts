@@ -18,7 +18,7 @@ export function deisolate(message: Message, args: string[], toIsolate: GuildMemb
         .value();
 
     if (!entry.userId) {
-        return error(message,
+        return error(message.channel,
             "Invalid User",
             `The provided user was not in isolation.`);
     }
@@ -32,7 +32,7 @@ export function deisolate(message: Message, args: string[], toIsolate: GuildMemb
     isolations.get('users').remove(entry)
         .write();
 
-    return success(message,
+    return success(message.channel,
         "DeIsolated " + toIsolate.displayName,
         `${toIsolate.displayName} has been successfully deIsolated${entry.duration > 0 ? ` after ${entry.duration / 3600000} hours` : ""}.`);
 }
