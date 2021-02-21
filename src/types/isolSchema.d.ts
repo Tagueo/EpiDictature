@@ -2,4 +2,5 @@ export type isolUser = { guildId: string; userId: string; roles: string[]; durat
 
 export type isolSchema = {
 	users: isolUser[];
+	count: number;
 }
