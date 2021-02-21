@@ -16,7 +16,7 @@ const isolations = low(adapter)
 
 const dictature = new Dictature();
 
-isolations.defaults({ users: [] })
+isolations.defaults({ users: [], count: 0 })
 	.write()
 
 fs.readdir("./events/", (err, files) => {

@@ -2,7 +2,6 @@
   "compilerOptions": {
     "resolveJsonModule": true,
     "moduleResolution": "node",
-    "watch": true,
     "outDir": "bin/",
     "rootDir": "src/",
     "lib": ["es2020"],
@@ -12,5 +11,6 @@
   },
   "exclude": [
     "node_modules",
+    "bin",
   ]
 }
