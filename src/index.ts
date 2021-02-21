@@ -28,6 +28,7 @@ fs.readdir("./events/", (err, files) => {
 		const eventName = file.split(".")[0];
 		dictature.on(<any>eventName, event.bind(null, dictature));
 		delete require.cache[require.resolve(`./events/${file}`)];
+		logger("", "Loaded event " + eventName, 'success')
 	});
 });
 
@@ -44,6 +45,7 @@ fs.readdir("./commands/", (err, files) => {
 		const props = require(`./commands/${file}`);
 		const commandName = file.split(".")[0];
 		dictature.commands.set(commandName, props);
+		logger("", "Loaded command " + commandName, 'success')
 	});
 });
 
