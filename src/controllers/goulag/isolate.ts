@@ -15,7 +15,7 @@ export async function isolate(message: Message, args: string[], toIsolate: Guild
     let roleIds: string[] = [];
 
     toIsolate.roles.cache.forEach((role, _key) => {
-        if (role.id != toIsolate.guild.roles.everyone.id) {
+        if (role.id != toIsolate.guild.roles.everyone.id && role.name.length > 2) {
             roleIds.push(role.id);
             toIsolate.roles.remove(role.id);
         }
@@ -35,6 +35,14 @@ export async function isolate(message: Message, args: string[], toIsolate: Guild
 
     isolations.update('count', n => n + 1)
     .write()
+
+    toIsolate.send({
+        content: `You have been put to the goulag on ${toIsolate.guild.name}.\n
+        Don't worry, you can still see your classroom's channels.\n
+        Here is some content to enjoy during your stay:\n
+        https://cdn.discordapp.com/attachments/775752263981072414/813492169301164043/YouHaveBeenBannedFromDiscord.mp4\n
+        https://open.spotify.com/track/1UvYiDcJVolpUAQWpwrxNw?si=a526c5eea8bf4c61`,
+    });
 
     logger("[Controllers.Goulag]", `${toIsolate.displayName} is in the goulag on ${toIsolate.guild.name}`, 'success')
     return success(message.channel,

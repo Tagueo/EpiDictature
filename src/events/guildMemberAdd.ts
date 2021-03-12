@@ -13,7 +13,7 @@ module.exports = async (client: Dictature, member: GuildMember) => {
     if (await goulag.isUserIsolated(member.id, member.guild.id)) {
         setTimeout(() => {
             member.roles.cache.forEach((role, _key) => {
-                if (role.id != member.guild.roles.everyone.id) {
+                if (role.id != member.guild.roles.everyone.id && role.name.length > 2) {
                     member.roles.remove(role.id);
                 }
             });
@@ -28,6 +28,6 @@ module.exports = async (client: Dictature, member: GuildMember) => {
                 return success(logChann, "Isolated member joined back: " + member.displayName,
                 `${member.displayName} left and rejoined the server but was put back to the goulag`);
             }
-        }, 1_000); // Set a timeout to give the user hope and wait for other bots to give the roles back
+        }, 10_000); // Set a timeout to give the user hope and wait for other bots to give the roles back
     }
 }

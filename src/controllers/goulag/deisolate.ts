@@ -9,7 +9,7 @@ import { logger } from "../../modules/logger";
  * @param  {string[]} args args from discord
  * @param  {GuildMember} toIsolate user to remove from the goulag
  */
-export function deisolate(message: Message, args: string[], toIsolate: GuildMember) {
+export async function deisolate(message: Message, args: string[], toIsolate: GuildMember) {
     const isolationRole = message.guild.roles.cache.find(role => role.name === "isoled");
 
     toIsolate.roles.remove(isolationRole);
@@ -24,14 +24,14 @@ export function deisolate(message: Message, args: string[], toIsolate: GuildMemb
             `The provided user was not in isolation.`);
     }
 
+    await isolations.get('users').remove(entry)
+        .write();
+
     for (let i = 0; i < entry.roles.length; i++) {
         const roleId = entry.roles[i];
 
         toIsolate.roles.add(roleId);
     }
-
-    isolations.get('users').remove(entry)
-        .write();
 
     logger("[Controllers.Goulag]", `${toIsolate.displayName} is no longer in the goulag on ${toIsolate.guild.name}`, 'success')
     return success(message.channel,
