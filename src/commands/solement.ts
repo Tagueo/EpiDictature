@@ -45,7 +45,7 @@ module.exports.run = async (client: Dictature, message: Message, args: Array<str
     } else {
         goulag.isolate(message, args, toIsolate)
 
-        client.user?.setActivity(`${goulag.getCount()} goulaged so far 👀`, {
+        client.user?.setActivity(`${goulag.getCount()} uses so far.`, {
             type: "WATCHING"
         })
     }

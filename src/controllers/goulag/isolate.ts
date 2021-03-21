@@ -23,12 +23,14 @@ export async function isolate(message: Message, args: string[], toIsolate: Guild
 
     toIsolate.roles.add(isolationRole);
 
+    let duration = args[1] ? parseFloat(args[1]) * 3600000 : 0;
+
     isolations.get('users')
         .push({
             guildId: message.guild.id,
             userId: toIsolate.user.id,
             roles: roleIds,
-            duration: args[1] ? parseFloat(args[1]) * 3600000 : 0,
+            duration: duration,
             date: Date.now()
         })
         .write();
@@ -37,11 +39,7 @@ export async function isolate(message: Message, args: string[], toIsolate: Guild
     .write()
 
     toIsolate.send({
-        content: `You have been put to the goulag on ${toIsolate.guild.name}.\n
-        Don't worry, you can still see your classroom's channels.\n
-        Here is some content to enjoy during your stay:\n
-        https://cdn.discordapp.com/attachments/775752263981072414/813492169301164043/YouHaveBeenBannedFromDiscord.mp4\n
-        https://open.spotify.com/track/1UvYiDcJVolpUAQWpwrxNw?si=a526c5eea8bf4c61`,
+        content: `You have been put to the goulag on ${toIsolate.guild.name}.${duration ? ` You will be there for ${duration}h.` : ""}`
     });
 
     logger("[Controllers.Goulag]", `${toIsolate.displayName} is in the goulag on ${toIsolate.guild.name}`, 'success')

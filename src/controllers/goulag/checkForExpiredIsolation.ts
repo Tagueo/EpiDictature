@@ -13,6 +13,7 @@ export async function checkForExpiredIsolation(client: Dictature) {
         
         const guild = await client.guilds.fetch(entry.guildId)
         const member = await guild.members.fetch(entry.userId)
+            .catch(e => {})
         const isolationRole = guild.roles.cache.find(role => role.name === "isoled");
 
         if (isolationRole && member && guild) {

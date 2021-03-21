@@ -8,7 +8,7 @@ import goulag from "../controllers/goulag";
 module.exports = async (client: Dictature) => {
 	logger("[Events.Ready]", "Bip boup", "success")
 
-	client.user?.setActivity(`${goulag.getCount()} goulaged so far 👀`, {
+	client.user?.setActivity(`${goulag.getCount()} sanctions so far.`, {
 		type: "WATCHING"
 	})
 
